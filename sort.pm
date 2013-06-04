@@ -6,14 +6,14 @@ use vars qw( $VERSION @ISA @EXPORT_OK );
 #----------------------------------------------------------------------
 require Exporter;
 #======================================================================
-$VERSION = '0.1';
+$VERSION = '0.2';
 @ISA = qw(Exporter);
-@EXPORT_OK = qw( sort_pl cmp_pl );
+@EXPORT_OK = qw( plsort plcmp );
 #======================================================================
 my $c = 0;
 my %pos = map { $_ => $c++ } 'A', 'a', "\x{104}", , "\x{105}", 'B', 'b', 'C', 'c', "\x{106}", "\x{107}", 'D', 'd', 'E', 'e', "\x{118}", "\x{119}", 'F', 'f', 'G', 'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l', "\x{141}", "\x{142}", 'M', 'm', 'N', 'n', "\x{143}", "\x{144}", 'O', 'o', "\x{d3}", "\x{f3}", 'P', 'p', 'R', 'r', 'S', 's', "\x{15a}", "\x{15b}", 'T', 't', 'U', 'u', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z', "\x{17b}", "\x{17c}", "\x{179}", "\x{17a}";
 #======================================================================
-sub cmp_pl {
+sub plcmp {
 	my ($sa, $sb) = @_;
 	
 	my @a = split( //o, $sa );
@@ -30,8 +30,8 @@ sub cmp_pl {
 	return $sa cmp $sb;	
 }
 #======================================================================
-sub sort_pl {
-	return sort { cmp_pl($a, $b) } @_;
+sub plsort {
+	return sort { plcmp($a, $b) } @_;
 }
 #======================================================================
 1;
@@ -43,24 +43,24 @@ PL::Sort
 
 =head1 SYNOPSIS
 
-	use PL::Sort qw( cmp_pl sort_pl );
+	use PL::Sort qw( plcmp plsort );
 
-	my @sorted_1 = sort { cmp_pl( $a, $b ) } "N\x{f3}w", "Now", "N\x{f3}";
-	my @sorted_2 = sort_pl( "N\x{f3}w", "Now", "N\x{f3}" );
+	my @sorted_1 = sort { plcmp( $a, $b ) } "N\x{f3}w", "Now", "N\x{f3}";
+	my @sorted_2 = plsort( "N\x{f3}w", "Now", "N\x{f3}" );
 	
 =head1 DESCRIPTION
 
-The PL::Sort module provides a simple way to correctly sort strings with polish characters.
+Implements polish sorting conventions, indepentent on current locales in effect, which are often bad. 
 
 =head1 SUBROUTINES/METHODS
 
 =over 4
 
-=item B<cmp_pl( STRING1, STRING2 )>
+=item B<plcmp( STRING1, STRING2 )>
 
 Subroutine, that makes comparison of two strings.
 
-=item B<sort_pl( LIST )>
+=item B<plsort( LIST )>
 
 Subroutine, that sort a list of a strings.
 

@@ -2,20 +2,20 @@ NAME
     PL::Sort
 
 SYNOPSIS
-            use PL::Sort qw( cmp_pl sort_pl );
+            use PL::Sort qw( plcmp plsort );
 
-            my @sorted_1 = sort { cmp_pl( $a, $b ) } "N\x{f3}w", "Now", "N\x{f3}";
-            my @sorted_2 = sort_pl( "N\x{f3}w", "Now", "N\x{f3}" );
+            my @sorted_1 = sort { plcmp( $a, $b ) } "N\x{f3}w", "Now", "N\x{f3}";
+            my @sorted_2 = plsort( "N\x{f3}w", "Now", "N\x{f3}" );
 
 DESCRIPTION
-    The PL::Sort module provides a simple way to correctly sort strings with
-    polish characters.
+    Implements polish sorting conventions, indepentent on current locales in
+    effect, which are often bad.
 
 SUBROUTINES/METHODS
-    cmp_pl( STRING1, STRING2 )
+    plcmp( STRING1, STRING2 )
         Subroutine, that makes comparison of two strings.
 
-    sort_pl( LIST )
+    plsort( LIST )
         Subroutine, that sort a list of a strings.
 
 DEPENDENCIES
